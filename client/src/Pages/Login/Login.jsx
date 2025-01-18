@@ -42,7 +42,7 @@ export default  (props) =>{
     </div>
 
     <footer>
-      <p>Dúvidas? Ligue <a>0800-761-4631</a></p>
+      <p>Dúvidas? Ligue <a>0000-000-0000</a></p>
 
       <ul>
         <li>Termos dos Cartões pré-pagos</li>
