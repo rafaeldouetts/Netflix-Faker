@@ -38,16 +38,19 @@ export default (props) => {
               <Pipoca />
 
               <div className='pop-card-container'>
-                <h1>A Netflix que você adora por apenas R$ 20,90. </h1>
-                <h2>Aproveite nossa opção mais acessível, o plano com anúncios.</h2>
+                <div>
+                  <h1>A Netflix que você adora por apenas R$ 20,90. </h1>
+                  <h2>Aproveite nossa opção mais acessível, o plano com anúncios.</h2>
+                </div>
+                
+                <button className='saiba-mais'>Saiba Mais</button>
               </div>
 
-              <button>Saiba Mais</button>
             </div>
           </div>
 
           {/* inicio catalogo */}
-          <div className="dark-body">
+          <div className="dark-body em-alta">
             <div className='faq-home-content'>
               <h1>Em Alta</h1>
 
@@ -65,7 +68,6 @@ export default (props) => {
           </div>
 
           <div className='background-black'>
-            <h1>Carrossel de Imagens</h1>
             <Carousel /> {/* Aqui estamos usando o carrossel */}
           </div>
 

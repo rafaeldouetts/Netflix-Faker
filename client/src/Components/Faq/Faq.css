@@ -36,4 +36,8 @@
     margin-top: 10px;
     border-top: 0.2px solid black;
   }
+
+  .faq:hover{
+    background-color:  #504f4f;
+  }
   
