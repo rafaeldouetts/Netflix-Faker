@@ -1,0 +1,55 @@
+/* Estilos principais do carrossel */
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    max-width: 600px;
+  }
+  
+  .carousel-slide {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .carousel-slide button{
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+  }
+  .carousel-image {
+    width: 90%;
+    height: auto;
+    border-radius: 8px;
+    margin: 10px;
+  }
+  
+  .carousel-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    transform: translateY(-50%);
+    z-index: 1;
+    background-color: black;
+  }
+  
+  .carousel-button.prev {
+    left: 10px;
+  }
+  
+  .carousel-button.next {
+    right: 10px;
+  }
+  
+  .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .carousel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
