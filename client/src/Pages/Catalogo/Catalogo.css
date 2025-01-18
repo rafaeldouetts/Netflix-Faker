@@ -1,26 +1,30 @@
 .catalogo-content{
-    background: linear-gradient(to right, #272727, #363636);
+  background: linear-gradient(to right, #272727, #363636);
 
-    color: white;
-    height: 1000px;
+  color: white;
+  height: 1000px;
 }
 
 header {
-    padding: 24px 5%;
-    width: 100%;
+  padding: 24px 5%;
+  width: 100%;
 
-    > img {
-      width: 167px;
-      @media (max-width: 425px) {
-        width: 75px;
-      }
+  > img {
+    width: 167px;
+    @media (max-width: 425px) {
+      width: 75px;
     }
+  }
 }
 
 .cabecalho{
-    display: flex;
-    justify-content: end;
-    margin-right: 150px;
-    margin-left: 150px;
-    border-bottom: solid 1px black;
+  display: flex;
+  justify-content: end;
+  margin-right: 150px;
+  margin-left: 150px;
+  border-bottom: solid 1px black;
+}
+
+.primary-color{
+  background: linear-gradient(to right, #272727, #363636);
 }
