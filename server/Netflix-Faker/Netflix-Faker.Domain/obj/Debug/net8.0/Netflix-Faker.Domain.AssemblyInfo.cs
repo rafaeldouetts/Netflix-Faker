@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Netflix-Faker.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb38383e81526f949145a346587e4bdb8792ae19")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ebec67069eafc6ce64c3598b3444d55f65ec9d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Netflix-Faker.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Netflix-Faker.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

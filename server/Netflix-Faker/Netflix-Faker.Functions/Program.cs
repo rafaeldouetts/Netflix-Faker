@@ -7,7 +7,6 @@ using Netflix_Faker.Application.Services;
 using Netflix_Faker.Domain.Interfaces;
 using Netflix_Faker.Domain.Interfaces.Repositories;
 using Netflix_Faker.Infrastructure.Data;
-using Netflix_Faker.Infrastructure.Repositories;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 

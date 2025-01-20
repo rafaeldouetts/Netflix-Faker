@@ -1,66 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Netflix_Faker.Domain.Dtos;
 using Netflix_Faker.Domain.Entities;
 using Netflix_Faker.Domain.Interfaces.Repositories;
 using Netflix_Faker.Infrastructure.Data;
 
-namespace Netflix_Faker.Infrastructure.Repositories
+public class CatalogoRepository : ICatalogoRepository
 {
-    public class CatalogoRepository : ICatalogoRepository
+    private readonly AppDbContext _context;
+
+    public CatalogoRepository(AppDbContext context)
     {
-        private readonly AppDbContext _context;
-        public CatalogoRepository(AppDbContext context)
-        {
-            _context = context;
-        }
-        // Adiciona um novo filme (ou qualquer objeto)
-        public async Task AddMovieAsync(Catalogo movie)
-        {
-            _context.Catalogo.Add(movie);
-            await _context.SaveChangesAsync();
-        }
+        _context = context;
+    }
 
-        // Exclui um filme (ou qualquer objeto) por ID
-        public async Task DeleteMovieAsync(int id)
-        {
-            var movie = await GetMovieByIdAsync(id);
-            if (movie != null)
-            {
-                _context.Set<object>().Remove(movie);
-                await _context.SaveChangesAsync();
-            }
-        }
+    // Método para adicionar um novo filme
+    public async Task AddMovieAsync(CatalogoModel movie)
+    {
+        // Adiciona o novo filme no banco de dados
+        await _context.Catalogo.AddAsync(movie);
+        await _context.SaveChangesAsync(); // Salva as alterações no banco
+    }
 
-        // Retorna todos os filmes (ou qualquer lista de objetos)
-        public async Task<IEnumerable<object>> GetAllMoviesAsync()
-        {
-            return await _context.Set<object>().ToListAsync();
-        }
+    // Método para encontrar filmes por gênero
+    public async Task<IEnumerable<CatalogoModel>> GetMoviesByGenreAsync(string genre)
+    {
+        // Retorna filmes filtrados por gênero
+        return await _context.Catalogo
+            .Where(movie => movie.Genero == genre) // Filtro pelo gênero
+            .ToListAsync(); // Converte para lista assíncrona
+    }
 
-        // Retorna um filme (ou qualquer objeto) por ID
-        public async Task<object> GetMovieByIdAsync(int id)
-        {
-            return await _context.Set<object>().FindAsync(id);
-        }
-
-        // Retorna filmes (ou objetos) por gênero (ou qualquer outro critério)
-        public async Task<IEnumerable<object>> GetMoviesByGenreAsync()
-        {
-            return await _context.Catalogo
-                                 .AsNoTracking()
-                                 .GroupBy(x => x.Genero)  // Agrupa por gênero
-                                 .Select(x => new  // Seleciona os grupos e cria o formato desejado
-                                 {
-                                     GenreName = x.Key,  // Nome do gênero
-                                     Movies = x.ToList()  // Lista de filmes para aquele gênero
-                                 })
-                                 .ToListAsync();
-        }
-
-        // Atualiza um filme (ou qualquer objeto)
-        public async Task UpdateMovieAsync(object movie)
-        {
-            _context.Set<object>().Update(movie);
-            await _context.SaveChangesAsync();
-        }
+    public async Task<IEnumerable<CatalogoDTO>> GetMoviesByGenreAsync()
+    {
+        return await _context.Catalogo
+            .AsNoTracking()
+            .GroupBy(x => x.Genero)
+            .Select(x => new CatalogoDTO(x.Key.ToString(), x.Select(s => new FilmesDto(s.Url, s.Nome, s.Genero, s.Id)).ToList()))
+            .ToListAsync();
+            
     }
 }

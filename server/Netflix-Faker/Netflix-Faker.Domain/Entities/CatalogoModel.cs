@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Netflix_Faker.Domain.Entities
 {
-    public class Catalogo
+    public class CatalogoModel
     {
-        public Catalogo()
+        public CatalogoModel()
         {
             
         }
-        public Catalogo(string nome, string genero, string url)
+        public CatalogoModel(string nome, string genero, string url)
         {
             Nome = nome;
             Genero = genero;

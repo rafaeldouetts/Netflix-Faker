@@ -1,17 +1,25 @@
 import logo from '../../assets/logo.png';
 import globo from '../../assets/globo.png';
 import './Home.css';
-import Curve from '../../Components/Curve';
+import Curve from './Components/Curve/Curve';
 import Pipoca from '../../assets/netflix-svg/pipoca';
-import Carousel from '../../Components/Carousel/Carousel';
-import Faq from '../../Components/Faq/Faq';
+import Carousel from './Components/Carousel/Carousel';
+import Faq from './Components/Faq/Faq';
 
 import Televisao from '../../assets/netflix-svg/televisao'
 import BaixarSeries from '../../assets/netflix-svg/baixar_series'
 import Lupa from '../../assets/netflix-svg/lupa'
 import Perfis from '../../assets/netflix-svg/perfis'
+import { useNavigate } from 'react-router-dom';
+
 
 export default (props) => {
+  const navigate = useNavigate();
+
+  function handleVamosLa (){
+    navigate('/login');
+  }
+  
   return (
     <>
       <div id="Home">
@@ -25,7 +33,7 @@ export default (props) => {
             <h2>A partir de R$ 20,90. Cancele quando quiser.</h2>
             <h3>Quer assistir? Informe seu email para criar ou reiniciar sua assinatura.</h3>
             <input type="text" placeholder="Email" />
-            <button className='button-patter'>Vamos lá ></button>
+            <button className='button-patter' onClick={handleVamosLa}>Vamos lá {'>'}</button>
           </div>
 
           <div className="default-ltr-cache-dulgtd">
@@ -139,7 +147,7 @@ export default (props) => {
       <div className='background-black text-color'>
         <div className='faq-home-content'>
         <span>Quer assistir? Informe seu email para criar ou reiniciar sua assinatura.</span>
-        <button className='button-patter'>Vamos lá ></button>
+        <button className='button-patter'>Vamos lá {'>'}</button>
         </div>
       </div>
 

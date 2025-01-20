@@ -1,9 +1,15 @@
 import './Login.css'
 import logo from '../../assets/logo.png';
 import globo from '../../assets/globo.png'
+import { useNavigate } from 'react-router-dom';
 
 export default  (props) =>{
+  const navigate = useNavigate();
 
+  function handleLogin(){
+    navigate('/catalogo');
+  }
+  
   return <>
   <div id="Login">
   <div class="opactity_controller">
@@ -18,7 +24,7 @@ export default  (props) =>{
         <form action="">
           <input type="text" placeholder="Email ou número de telefone" />
           <input type="password" placeholder="Senha" />
-          <button type="submit">Entrar</button>
+          <button type="submit" onClick={handleLogin}>Entrar</button>
           <div>
             <label htmlFor="remember-login">
               <input

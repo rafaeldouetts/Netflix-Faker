@@ -1,15 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
+using Microsoft.AspNetCore.Http;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Netflix_Faker.Domain.Dtos;
 using Netflix_Faker.Domain.Interfaces;
+using Netflix_Faker.Domain.Interfaces.Repositories;
 
 namespace Netflix_Faker.Application.Services
 {
     public class BlobService : IBlobService
     {
         private readonly string _ConnectionString = "AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
-        public BlobService()
+        private readonly ICatalogoRepository _catalogoRepository;
+
+        public BlobService(ICatalogoRepository catalogoRepository)
         {
+            _catalogoRepository = catalogoRepository;
         }
 
         public async Task<string> GetBlobUrlWithSas(string blobName, string containerName)
@@ -75,15 +83,45 @@ namespace Netflix_Faker.Application.Services
             await blob.UploadFromByteArrayAsync(fileBytes, 0, fileBytes.Length);
 
             // Gera o SAS Token para o blob
+            string sasToken = GenerateSasToken(blob);
+
+            return blobName;
+        }
+
+        private static string GenerateSasToken(CloudBlockBlob blob)
+        {
             var sasToken = blob.GetSharedAccessSignature(new SharedAccessBlobPolicy
             {
                 SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddHours(1), // Expira em 1 hora
                 Permissions = SharedAccessBlobPermissions.Read // Apenas leitura
             });
+            return sasToken;
+        }
 
-            // Retorna a URL completa com o SAS Token
-            var blobUrlWithSas = blob.Uri + sasToken + formFile.ContentType;
-            return blobUrlWithSas;
+        public string GenerateSasUrl(string containerName, string blobName)
+        {
+            var blobServiceClient = new BlobServiceClient(_ConnectionString);
+            var blobContainerClient = blobServiceClient.GetBlobContainerClient(containerName);
+            var blobClient = blobContainerClient.GetBlobClient(blobName);
+
+            // Criando o SAS para o blob
+            var blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)  // Tempo de expiração do SAS
+            };
+
+            // Definir permissões para leitura (Read) no blob
+            blobSasBuilder.SetPermissions(BlobSasPermissions.Read);
+
+         
+            var sasToken = blobSasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==")).ToString();
+            var sasUrl = blobClient.Uri.AbsoluteUri + "?" + sasToken;
+
+            // Gerar a URL com o SAS
+            var sasUri = blobClient.GenerateSasUri(blobSasBuilder);
+            return sasUri.ToString();
         }
 
         public async Task<string> Upload(Stream fileStream, string fileName, string containerName)
@@ -152,6 +190,20 @@ namespace Netflix_Faker.Application.Services
             }
         }
 
+        public async Task<IEnumerable<CatalogoDTO>> GetFilmes(string containerName)
+        {
+            var categorias = await _catalogoRepository.GetMoviesByGenreAsync();
+
+            foreach (var categoria in categorias)
+            {
+                foreach(var filme in categoria.Filmes)
+                {
+                    filme.Url = GenerateSasUrl(containerName, filme.Url);
+                }
+            }
+
+            return categorias;
+        }
     }
 }
 

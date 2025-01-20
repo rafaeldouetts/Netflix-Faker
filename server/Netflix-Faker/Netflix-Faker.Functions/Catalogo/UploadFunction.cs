@@ -6,7 +6,7 @@ using Netflix_Faker.Domain.Entities;
 using Netflix_Faker.Domain.Interfaces;
 using Netflix_Faker.Domain.Interfaces.Repositories;
 
-namespace Netflix_Faker.Functions
+namespace Netflix_Faker.Functions.Catalogo
 {
     public class UploadFunction
     {
@@ -22,7 +22,8 @@ namespace Netflix_Faker.Functions
             _catalogoRepository = catalogoRepository;
         }
 
-        [Function("Upload")]
+        //TODO: colocar esse endpoint no modulo de catalo via APIM 
+        [Function("upload")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -57,7 +58,7 @@ namespace Netflix_Faker.Functions
 
             var url = await _blobService.Upload(file, ContainerName);
 
-            var catalogo = new Catalogo(movieName, genero, url);
+            var catalogo = new CatalogoModel(movieName, genero, url);
 
             await _catalogoRepository.AddMovieAsync(catalogo);
 

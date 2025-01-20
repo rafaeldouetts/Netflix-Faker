@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './Carousel.css';
-import imagem1 from '../../assets/top10/1.webp'
-import imagem2 from '../../assets/top10/2.webp'
-import imagem3 from '../../assets/top10/3.webp'
-import imagem4 from '../../assets/top10/4.webp'
-import imagem5 from '../../assets/top10/5.webp'
-import imagem6 from '../../assets/top10/6.webp'
-import imagem7 from '../../assets/top10/7.webp'
-import imagem8 from '../../assets/top10/8.webp'
-import imagem9 from '../../assets/top10/9.webp'
-import imagem10 from '../../assets/top10/10.webp'
+import imagem1 from '../../../../assets/top10/1.webp'
+import imagem2 from '../../../../assets/top10/2.webp'
+import imagem3 from '../../../../assets/top10/3.webp'
+import imagem4 from '../../../../assets/top10/4.webp'
+import imagem5 from '../../../../assets/top10/5.webp'
+import imagem6 from '../../../../assets/top10/6.webp'
+import imagem7 from '../../../../assets/top10/7.webp'
+import imagem8 from '../../../../assets/top10/8.webp'
+import imagem9 from '../../../../assets/top10/9.webp'
+import imagem10 from '../../../../assets/top10/10.webp'
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,16 +40,6 @@ const Carousel = () => {
   };
 
   const orderList = () => {
-    
-    // Pega os últimos 5 elementos e coloca na frente
-    // const lastFive = images.slice(-5); // Pega os últimos 5 itens
-    // const rest = images.slice(0, images.length - 5); // Pega o restante dos itens
-
-    // Junta os dois arrays, com os últimos 5 itens no começo
-    // lastFive.concat(rest);
-
-    // setImages(lastFive);
-    debugger
     setImages()
   };
 

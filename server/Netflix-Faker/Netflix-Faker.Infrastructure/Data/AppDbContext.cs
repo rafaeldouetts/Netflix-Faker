@@ -12,7 +12,7 @@ namespace Netflix_Faker.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Catalogo> Catalogo { get; set; }
+        public DbSet<CatalogoModel> Catalogo { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
            : base(options)
@@ -24,7 +24,7 @@ namespace Netflix_Faker.Infrastructure.Data
             base.OnModelCreating(builder);
 
             // Catalogo
-            builder.Entity<Catalogo>()
+            builder.Entity<CatalogoModel>()
                 .HasKey(t => t.Id);  // Chave primária
 
             builder.Ignore<ValidationResult>();
